@@ -80,8 +80,9 @@ export const useAuth = () => {
         loading: false
       });
       setSessionTimeRemaining(authService.getSessionTimeRemaining());
-      // Redirect to summary tab after successful login
-      window.location.hash = 'summary';
+      // Redirect based on user role
+      // View-only members → Summary tab, Admin/Super Admin → Allocations tab
+      window.location.hash = user.role === 'member' ? 'summary' : 'allocations';
     } catch (error: any) {
       setLoginError(error.message || 'Login failed');
     } finally {
