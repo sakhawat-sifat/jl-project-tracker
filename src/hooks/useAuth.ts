@@ -96,8 +96,8 @@ export const useAuth = () => {
     });
     setSessionTimeRemaining(0);
     setLoginError(null);
-    // Clear URL hash to reset to base URL
-    window.location.hash = '';
+    // Clear URL hash completely using replaceState
+    window.history.replaceState(null, '', window.location.pathname);
   };
 
   return {
