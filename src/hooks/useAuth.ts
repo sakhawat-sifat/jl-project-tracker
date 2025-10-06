@@ -80,6 +80,8 @@ export const useAuth = () => {
         loading: false
       });
       setSessionTimeRemaining(authService.getSessionTimeRemaining());
+      // Redirect to summary tab after successful login
+      window.location.hash = 'summary';
     } catch (error: any) {
       setLoginError(error.message || 'Login failed');
     } finally {
