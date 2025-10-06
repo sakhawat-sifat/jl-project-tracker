@@ -149,7 +149,15 @@ npm run preview
 ```
 JL-Project-Tracker-New/
 ├── public/                    # Static assets
-│   └── JL Icon.png           # Application icon
+│   ├── JL Icon.png           # Application icon
+│   └── og_image.png          # Open Graph image for social sharing
+├── docs/                      # Documentation
+│   ├── CONFIGURATION_MIGRATION.md
+│   ├── ENV_CONFIG.md
+│   ├── TEAM_STATUS_IMPLEMENTATION.md
+│   └── TESTING_GUIDE.md
+├── tools/                     # Utility tools
+│   └── password-hash-generator.html
 ├── src/
 │   ├── components/           # React components
 │   │   ├── AdminHeader.tsx
@@ -157,18 +165,21 @@ JL-Project-Tracker-New/
 │   │   ├── AllocationForm.tsx
 │   │   ├── ConfirmModal.tsx
 │   │   ├── DatabaseConfig.tsx
+│   │   ├── DatabaseSetup.tsx
 │   │   ├── LoginForm.tsx
-│   │   ├── MembersListModal.tsx    # NEW: Modal for viewing team members
+│   │   ├── MembersListModal.tsx    # Modal for viewing team members
 │   │   ├── MonthlyAllocationView.tsx
 │   │   ├── MonthlySummary.tsx
+│   │   ├── NotFound.tsx
+│   │   ├── NotificationMessage.tsx
 │   │   ├── ProjectManagement.tsx
 │   │   ├── RoleManagement.tsx
+│   │   ├── TeamAllocationSummary.tsx
 │   │   ├── TeamMemberManagement.tsx
-│   │   ├── Toast.tsx               # NEW: Toast notification system
-│   │   └── ...
+│   │   └── Toast.tsx               # Toast notification system
 │   ├── hooks/                # Custom React hooks
 │   │   ├── useAuth.ts
-│   │   └── useToast.ts            # NEW: Toast hook
+│   │   └── useToast.ts
 │   ├── services/             # API and business logic
 │   │   ├── authService.ts
 │   │   └── supabaseService.ts
@@ -231,13 +242,16 @@ See the `supabase/migrations/` folder for complete schema definitions.
 - **Admin**: Access to all features except user management
 - **Member**: View-only access to certain features
 
-## 📝 Configuration Files
+## 📝 Documentation
 
-- `ENV_CONFIG.md` - Environment variable documentation
-- `CONFIGURATION_MIGRATION.md` - Guide for configuration migration
-- `SUPER_ADMIN_PASSWORD.md` - Instructions for setting up admin accounts
-- `TESTING_GUIDE.md` - Testing procedures and guidelines
+- `README.md` - This file - Project overview and setup guide
 - `CHANGELOG.md` - Project changelog and version history
+- `SUPER_ADMIN_PASSWORD.md` - Instructions for setting up admin accounts
+- `docs/ENV_CONFIG.md` - Environment variable documentation
+- `docs/CONFIGURATION_MIGRATION.md` - Guide for configuration migration
+- `docs/TESTING_GUIDE.md` - Testing procedures and guidelines
+- `docs/TEAM_STATUS_IMPLEMENTATION.md` - Team status feature implementation details
+- `tools/password-hash-generator.html` - Utility for generating password hashes
 
 ## 🐛 Troubleshooting
 

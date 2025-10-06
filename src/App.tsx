@@ -62,7 +62,7 @@ function App() {
     return validTabs.includes(hash as any);
   };
 
-  // Get active tab from URL hash or default to 'allocations'
+  // Get active tab from URL hash or default to 'summary'
   const getActiveTabFromHash = (): 'allocations' | 'team' | 'projects' | 'roles' | 'summary' | 'admin' => {
     const hash = window.location.hash.slice(1); // Remove the # character
     const validTabs: Array<'allocations' | 'team' | 'projects' | 'roles' | 'summary' | 'admin'> = 
@@ -71,7 +71,7 @@ function App() {
     if (validTabs.includes(hash as any)) {
       return hash as 'allocations' | 'team' | 'projects' | 'roles' | 'summary' | 'admin';
     }
-    return 'allocations';
+    return 'summary';
   };
 
   const [activeTab, setActiveTab] = useState<'allocations' | 'team' | 'projects' | 'roles' | 'summary' | 'admin'>(getActiveTabFromHash());
