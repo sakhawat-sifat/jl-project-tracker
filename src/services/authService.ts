@@ -1,6 +1,6 @@
 import { AdminUser, LoginCredentials } from '../types';
 import { appConfig } from '../config/app.config';
-import { supabaseService } from './supabaseService';
+import * as apiService from './apiService';
 
 // Session management constants from environment variables
 const SESSION_DURATION = appConfig.session.durationMs;
@@ -35,44 +35,17 @@ export const authService = {
   // Login functionality
   login: async (credentials: LoginCredentials): Promise<AdminUser> => {
     try {
-      // Try to login using Supabase database first
-      const user = await supabaseService.loginAdminUser(credentials.username, credentials.password);
+      // Call backend API to login
+      const user = await apiService.login(credentials.username, credentials.password);
       
       // Store session
       localStorage.setItem(USER_KEY, JSON.stringify(user));
       localStorage.setItem(LAST_ACTIVITY_KEY, Date.now().toString());
       
       return user;
-    } catch (dbError) {
-      // Fallback to mock authentication if database login fails
-      console.warn('Database login failed, falling back to mock auth:', dbError);
-      
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 500));
-
-      // Mock authentication - replace with real API call
-      const user = mockAdminUsers.find(
-        u => u.username === credentials.username && u.isActive
-      );
-
-      if (!user) {
-        throw new Error('Invalid username or password');
-      }
-
-      // For demo purposes, accept any password for existing users
-      // In production, verify against hashed password
-      if (credentials.password.length < 3) {
-        throw new Error('Invalid username or password');
-      }
-
-      // Update last login
-      user.lastLogin = new Date();
-
-      // Store session
-      localStorage.setItem(USER_KEY, JSON.stringify(user));
-      localStorage.setItem(LAST_ACTIVITY_KEY, Date.now().toString());
-
-      return user;
+    } catch (error) {
+      console.error('Login failed:', error);
+      throw new Error(error instanceof Error ? error.message : 'Login failed');
     }
   },
 

@@ -42,13 +42,13 @@ const MonthlyAllocationView: React.FC<MonthlyAllocationViewProps> = ({
   const [viewMode, setViewMode] = useState<'table' | 'cards'>('table');
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Get unique values for filters
+  // Get unique values for filters - months in chronological order, everything else alphabetically ascending
   const uniqueMonths = sortMonthsChronologically(Array.from(new Set(allocations.map(a => a.month))));
-  const uniqueYears = Array.from(new Set(allocations.map(a => a.year))).sort((a, b) => b - a);
-  const uniqueEmployees = Array.from(new Set(allocations.map(a => a.employeeName))).sort();
-  const uniqueProjects = Array.from(new Set(allocations.map(a => a.projectName))).sort();
-  const uniqueClients = Array.from(new Set(projects.map(p => p.client).filter(Boolean))).sort();
-  const uniqueRoles = Array.from(new Set(teamMembers.map(m => m.role))).sort();
+  const uniqueYears = Array.from(new Set(allocations.map(a => a.year))).sort((a, b) => a - b);
+  const uniqueEmployees = Array.from(new Set(allocations.map(a => a.employeeName))).sort((a, b) => a.localeCompare(b));
+  const uniqueProjects = Array.from(new Set(allocations.map(a => a.projectName))).sort((a, b) => a.localeCompare(b));
+  const uniqueClients = Array.from(new Set(projects.map(p => p.client).filter(Boolean))).sort((a, b) => a.localeCompare(b));
+  const uniqueRoles = Array.from(new Set(teamMembers.map(m => m.role))).sort((a, b) => a.localeCompare(b));
 
   // Calculate over-allocated employees
   const overAllocatedEmployees = useMemo(() => {
@@ -62,8 +62,11 @@ const MonthlyAllocationView: React.FC<MonthlyAllocationViewProps> = ({
           totalPercentage: 0
         };
       }
-      // Add with proper rounding to avoid floating-point precision issues
-      acc[key].totalPercentage += allocation.percentage;
+      // Convert percentage to number before adding (fix for string concatenation issue)
+      const percentageNum = typeof allocation.percentage === 'string' 
+        ? parseFloat(allocation.percentage) 
+        : allocation.percentage;
+      acc[key].totalPercentage += percentageNum;
       return acc;
     }, {} as Record<string, any>);
 
@@ -77,7 +80,8 @@ const MonthlyAllocationView: React.FC<MonthlyAllocationViewProps> = ({
 
   // Enhanced filtering and sorting
   const filteredAndSortedAllocations = useMemo(() => {
-    let filtered = allocations.filter(allocation => {
+    // Filter allocations
+    const filtered = allocations.filter(allocation => {
       const member = teamMembers.find(m => m.id === allocation.userId);
       const project = projects.find(p => p.id === allocation.projectId);
       
@@ -98,8 +102,8 @@ const MonthlyAllocationView: React.FC<MonthlyAllocationViewProps> = ({
              matchesProject && matchesClient && matchesRole && matchesStatus;
     });
 
-    // Sort the filtered results
-    filtered.sort((a, b) => {
+    // Sort the filtered results - create a new sorted array
+    return [...filtered].sort((a, b) => {
       let aValue: any, bValue: any;
       
       switch (sortOptions.field) {
@@ -112,8 +116,9 @@ const MonthlyAllocationView: React.FC<MonthlyAllocationViewProps> = ({
           bValue = b.projectName;
           break;
         case 'percentage':
-          aValue = a.percentage;
-          bValue = b.percentage;
+          // Convert to number for proper numeric sorting
+          aValue = typeof a.percentage === 'string' ? parseFloat(a.percentage) : a.percentage;
+          bValue = typeof b.percentage === 'string' ? parseFloat(b.percentage) : b.percentage;
           break;
         case 'month':
           const monthOrder = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -140,8 +145,6 @@ const MonthlyAllocationView: React.FC<MonthlyAllocationViewProps> = ({
         return aValue > bValue ? -1 : aValue < bValue ? 1 : 0;
       }
     });
-
-    return filtered;
   }, [allocations, teamMembers, projects, filters, sortOptions]);
 
   // Pagination calculations
@@ -482,10 +485,10 @@ const MonthlyAllocationView: React.FC<MonthlyAllocationViewProps> = ({
                         <td className="px-3 sm:px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center">
                             <div className={`w-8 h-8 sm:w-10 sm:h-10 ${isOverAllocated ? 'bg-red-500' : 'bg-indigo-500'} rounded-full flex items-center justify-center text-white font-medium mr-2 sm:mr-3 text-xs sm:text-sm`}>
-                              {allocation.employeeName.charAt(0).toUpperCase()}
+                              {allocation.employeeName ? allocation.employeeName.charAt(0).toUpperCase() : '?'}
                             </div>
                             <div>
-                              <div className="text-xs sm:text-sm font-medium text-gray-900">{allocation.employeeName}</div>
+                              <div className="text-xs sm:text-sm font-medium text-gray-900">{allocation.employeeName || 'Unknown'}</div>
                               {isOverAllocated && (
                                 <div className="flex items-center text-xs text-red-600">
                                   <AlertTriangle className="h-3 w-3 mr-1" />
@@ -570,10 +573,10 @@ const MonthlyAllocationView: React.FC<MonthlyAllocationViewProps> = ({
                       <div className="flex items-start justify-between mb-3">
                         <div className="flex items-center">
                           <div className={`w-10 h-10 ${isOverAllocated ? 'bg-red-500' : 'bg-indigo-500'} rounded-full flex items-center justify-center text-white font-medium mr-3`}>
-                            {allocation.employeeName.charAt(0).toUpperCase()}
+                            {allocation.employeeName ? allocation.employeeName.charAt(0).toUpperCase() : '?'}
                           </div>
                           <div>
-                            <h3 className="font-semibold text-gray-900 text-sm">{allocation.employeeName}</h3>
+                            <h3 className="font-semibold text-gray-900 text-sm">{allocation.employeeName || 'Unknown'}</h3>
                             <p className="text-xs text-gray-600">{member?.role || 'N/A'}</p>
                             {isOverAllocated && (
                               <div className="flex items-center text-xs text-red-600 mt-1">

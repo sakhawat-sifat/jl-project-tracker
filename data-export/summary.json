@@ -1,0 +1,10 @@
+{
+  "export_date": "2025-10-08T08:07:38.037Z",
+  "tables": {
+    "team_members": 22,
+    "projects": 25,
+    "roles": 14,
+    "allocations": 229,
+    "admin_users": 3
+  }
+}

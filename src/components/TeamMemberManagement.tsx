@@ -33,9 +33,9 @@ const TeamMemberManagement: React.FC<TeamMemberManagementProps> = ({
     status: 'active' as 'active' | 'inactive'
   });
 
-  const departments = ['Engineering', 'Design', 'Product', 'Marketing', 'Sales', 'Operations', 'HR', 'Finance'];
-  const uniqueRoles = Array.from(new Set(roles.map(r => r.name))).sort();
-  const uniqueDepartments = Array.from(new Set(teamMembers.map(m => m.department).filter(Boolean))).sort();
+  const departments = ['Engineering', 'Design', 'Product', 'Marketing', 'Sales', 'Operations', 'HR', 'Finance'].sort((a, b) => a.localeCompare(b));
+  const uniqueRoles = Array.from(new Set(roles.map(r => r.name))).sort((a, b) => a.localeCompare(b));
+  const uniqueDepartments = Array.from(new Set(teamMembers.map(m => m.department).filter(Boolean))).sort((a, b) => a.localeCompare(b));
 
   const filteredMembers = teamMembers.filter(member => {
     const matchesSearch = member.name.toLowerCase().includes(searchTerm.toLowerCase()) ||

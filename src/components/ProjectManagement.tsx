@@ -44,9 +44,9 @@ const ProjectManagement: React.FC<ProjectManagementProps> = ({
     priority: 'Medium' as Project['priority']
   });
 
-  const statuses: Project['status'][] = ['Planning', 'Active', 'On Hold', 'Completed', 'Cancelled'];
-  const priorities: Project['priority'][] = ['Low', 'Medium', 'High', 'Critical'];
-  const clients = Array.from(new Set(projects.map(p => p.client).filter(Boolean))).sort();
+  const statuses: Project['status'][] = ['Planning', 'Active', 'On Hold', 'Completed', 'Cancelled'].sort((a, b) => a.localeCompare(b));
+  const priorities: Project['priority'][] = ['Low', 'Medium', 'High', 'Critical'].sort((a, b) => a.localeCompare(b));
+  const clients = Array.from(new Set(projects.map(p => p.client).filter(Boolean))).sort((a, b) => a.localeCompare(b));
 
   const filteredProjects = projects.filter(project => {
     const matchesSearch = project.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -360,6 +360,7 @@ const ProjectManagement: React.FC<ProjectManagementProps> = ({
                     max="2030-12-31"
                     required
                   />
+                  <p className="text-xs text-gray-500 mt-1">Format: DD/MM/YYYY</p>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">End Date</label>
@@ -371,6 +372,7 @@ const ProjectManagement: React.FC<ProjectManagementProps> = ({
                     min="2020-01-01"
                     max="2030-12-31"
                   />
+                  <p className="text-xs text-gray-500 mt-1">Format: DD/MM/YYYY</p>
                 </div>
               </div>
 

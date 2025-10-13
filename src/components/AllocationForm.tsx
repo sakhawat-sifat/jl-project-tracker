@@ -17,9 +17,13 @@ const AllocationForm: React.FC<AllocationFormProps> = ({
   editingAllocation,
   onCancelEdit
 }) => {
-  // Filter active team members and non-completed projects
-  const activeTeamMembers = teamMembers.filter(member => member.status !== 'inactive');
-  const availableProjects = projects.filter(project => project.status !== 'Completed');
+  // Filter active team members and non-completed projects, then sort alphabetically
+  const activeTeamMembers = teamMembers
+    .filter(member => member.status !== 'inactive')
+    .sort((a, b) => a.name.localeCompare(b.name));
+  const availableProjects = projects
+    .filter(project => project.status !== 'Completed')
+    .sort((a, b) => a.name.localeCompare(b.name));
   
   const [formData, setFormData] = useState({
     userId: '',
@@ -55,9 +59,9 @@ const AllocationForm: React.FC<AllocationFormProps> = ({
     'July', 'August', 'September', 'October', 'November', 'December'
   ];
 
-  // Generate years from 6 years ago to 2 years in the future
+  // Generate years from 6 years ago to 2 years in the future, in ascending order
   const currentYear = new Date().getFullYear();
-  const years = Array.from({ length: 9 }, (_, i) => currentYear - 6 + i);
+  const years = Array.from({ length: 9 }, (_, i) => currentYear - 6 + i).sort((a, b) => a - b);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -178,7 +182,7 @@ const AllocationForm: React.FC<AllocationFormProps> = ({
             type="number"
             min="0"
             max="100"
-            step="0.1"
+            step="any"
             placeholder="e.g., 50"
             value={formData.percentage}
             onChange={(e) => setFormData({ ...formData, percentage: e.target.value })}

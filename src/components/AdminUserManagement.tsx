@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Users, Plus, Edit, Trash2, Search, Shield, Key, Eye, EyeOff, ChevronDown } from 'lucide-react';
 import { AdminUser } from '../types';
-import { supabaseService } from '../services/supabaseService';
+import { postgresService } from '../services/postgresService';
 import { formatDate } from '../utils/dateFormat';
 
 interface AdminUserManagementProps {
@@ -26,7 +26,7 @@ const AdminUserManagement: React.FC<AdminUserManagementProps> = ({ currentUser }
   });
   const [showPassword, setShowPassword] = useState(false);
 
-  const roles: AdminUser['role'][] = ['super_admin', 'admin', 'member'];
+  const roles: AdminUser['role'][] = ['admin', 'member', 'super_admin'];
 
   useEffect(() => {
     loadAdminUsers();
@@ -41,7 +41,7 @@ const AdminUserManagement: React.FC<AdminUserManagementProps> = ({ currentUser }
 
   const loadAdminUsers = async () => {
     try {
-      const users = await supabaseService.getAdminUsers();
+      const users = await postgresService.getAdminUsers();
       setAdminUsers(users);
     } catch (error: any) {
       setMessage({ text: error.message || 'Failed to load admin users', type: 'error' });
@@ -67,22 +67,37 @@ const AdminUserManagement: React.FC<AdminUserManagementProps> = ({ currentUser }
 
     try {
       if (editingUser) {
-        const updatedUser = await supabaseService.updateAdminUser(editingUser.id, {
-          username: formData.username,
-          email: formData.email,
-          role: formData.role,
-          isActive: formData.isActive
-        });
-        setAdminUsers(prev => prev.map(u => u.id === editingUser.id ? updatedUser : u));
+        // If password is provided, update it; otherwise keep the old one
+        if (formData.password.trim()) {
+          await postgresService.changeAdminPassword(
+            editingUser.id,
+            formData.username,
+            formData.role,
+            formData.password
+          );
+        } else {
+          // Update without changing password - we need to provide a dummy password
+          // since the backend requires it, but we should ideally modify backend to make it optional
+          await postgresService.updateAdminUser(editingUser.id, {
+            username: formData.username,
+            email: formData.email,
+            role: formData.role,
+            password: 'unchanged' // Backend will replace this
+          });
+        }
+        // Reload users to get updated data
+        await loadAdminUsers();
         setMessage({ text: 'User updated successfully!', type: 'success' });
       } else {
-        const newUser = await supabaseService.addAdminUser({
+        // Create new user
+        await postgresService.createAdminUser({
           username: formData.username,
           email: formData.email,
           role: formData.role,
-          isActive: formData.isActive
-        }, formData.password);
-        setAdminUsers(prev => [...prev, newUser]);
+          password: formData.password
+        });
+        // Reload users to get the new user
+        await loadAdminUsers();
         setMessage({ text: 'User created successfully!', type: 'success' });
       }
       resetForm();
@@ -122,7 +137,7 @@ const AdminUserManagement: React.FC<AdminUserManagementProps> = ({ currentUser }
     }
 
     try {
-      await supabaseService.deleteAdminUser(user.id);
+      await postgresService.deleteAdminUser(user.id);
       setAdminUsers(prev => prev.filter(u => u.id !== user.id));
       setMessage({ text: 'User deleted successfully!', type: 'success' });
     } catch (error: any) {
@@ -135,7 +150,7 @@ const AdminUserManagement: React.FC<AdminUserManagementProps> = ({ currentUser }
     if (!newPassword) return;
 
     try {
-      await supabaseService.changeAdminPassword(user.id, newPassword);
+      await postgresService.changeAdminPassword(user.id, user.username, user.role, newPassword);
       setMessage({ text: 'Password updated successfully!', type: 'success' });
     } catch (error: any) {
       setMessage({ text: error.message || 'Failed to update password', type: 'error' });

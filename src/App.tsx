@@ -11,15 +11,13 @@ import ConfirmModal from './components/ConfirmModal';
 import NotificationMessage from './components/NotificationMessage';
 import LoginForm from './components/LoginForm';
 import AdminHeader from './components/AdminHeader';
-import DatabaseSetup from './components/DatabaseSetup';
-import DatabaseConfig from './components/DatabaseConfig';
 import NotFound from './components/NotFound';
 import { ToastContainer } from './components/Toast';
-import { supabaseService } from './services/supabaseService';
+import { postgresService } from './services/postgresService';
 import { TeamMember, Project, Allocation, Role } from './types';
 import { useAuth } from './hooks/useAuth';
 import { useToast } from './hooks/useToast';
-import { appConfig, validateConfig } from './config/app.config';
+import { appConfig } from './config/app.config';
 
 function App() {
   const {
@@ -45,7 +43,6 @@ function App() {
   const [checkingConnection, setCheckingConnection] = useState(true);
   const [message, setMessage] = useState<{ text: string; type: 'success' | 'error' | 'info' } | null>(null);
   const [databaseConnected, setDatabaseConnected] = useState(false);
-  const [showDatabaseConfig, setShowDatabaseConfig] = useState(false);
   const [show404, setShow404] = useState(false);
   
   const [showConfirmModal, setShowConfirmModal] = useState(false);
@@ -148,61 +145,26 @@ function App() {
   const checkDatabaseConnection = async () => {
     setCheckingConnection(true);
     try {
-      // Validate configuration
-      const configValidation = validateConfig();
-      
-      if (!configValidation.isValid) {
-        console.warn('Missing environment variables:', configValidation.missing);
-        setShowDatabaseConfig(true);
-        setDatabaseConnected(false);
-        setLoading(false);
-        setCheckingConnection(false);
-        return;
-      }
-
       // Try to fetch data to test connection
-      await supabaseService.getRoles();
+      await postgresService.getRoles();
       setDatabaseConnected(true);
-      setShowDatabaseConfig(false);
       setCheckingConnection(false);
       loadInitialData();
     } catch (error) {
       console.error('Database connection failed:', error);
       setDatabaseConnected(false);
-      setShowDatabaseConfig(false);
       setLoading(false);
       setCheckingConnection(false);
     }
   };
 
-  const handleDatabaseConfig = (config: { url: string; key: string }) => {
-    // In a real application, you would save these to environment variables
-    // For now, we'll show instructions to the user
-    setMessage({ 
-      text: 'Please add the credentials to your .env file and restart the application', 
-      type: 'info' 
-    });
-    
-    // Create .env content for user to copy
-    const envContent = `VITE_SUPABASE_URL=${config.url}\nVITE_SUPABASE_ANON_KEY=${config.key}`;
-    
-    // Try to download .env file
-    const blob = new Blob([envContent], { type: 'text/plain' });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = '.env';
-    a.click();
-    window.URL.revokeObjectURL(url);
-  };
-
   const loadInitialData = async () => {
     try {
       const [membersData, projectsData, rolesData, allocationsData] = await Promise.all([
-        supabaseService.getTeamMembers(),
-        supabaseService.getProjects(),
-        supabaseService.getRoles(),
-        supabaseService.getAllocations()
+        postgresService.getTeamMembers(),
+        postgresService.getProjects(),
+        postgresService.getRoles(),
+        postgresService.getAllocations()
       ]);
       
       setTeamMembers(membersData);
@@ -233,7 +195,7 @@ function App() {
         return;
       }
 
-      const newMember = await supabaseService.addTeamMember(memberData);
+      const newMember = await postgresService.createTeamMember(memberData);
       setTeamMembers(prev => [...prev, newMember]);
       success(`Team member "${memberData.name}" added successfully!`);
     } catch (err) {
@@ -249,7 +211,7 @@ function App() {
     }
 
     try {
-      const updatedMember = await supabaseService.updateTeamMember(id, memberData);
+      const updatedMember = await postgresService.updateTeamMember(id, memberData);
       setTeamMembers(prev => prev.map(m => m.id === id ? updatedMember : m));
       // Update allocations with new member name
       setAllocations(prev => prev.map(a => a.userId === id ? { ...a, employeeName: memberData.name } : a));
@@ -274,7 +236,7 @@ function App() {
     setConfirmType('danger');
     setConfirmAction(() => async () => {
       try {
-        await supabaseService.deleteTeamMember(id);
+        await postgresService.deleteTeamMember(id);
         setTeamMembers(prev => prev.filter(m => m.id !== id));
         setAllocations(prev => prev.filter(a => a.userId !== id));
         success(`Team member "${member.name}" deleted successfully!`);
@@ -308,7 +270,7 @@ function App() {
         return;
       }
 
-      const newProject = await supabaseService.addProject(projectData);
+      const newProject = await postgresService.createProject(projectData);
       setProjects(prev => [...prev, newProject]);
       success(`Project "${projectData.name}" added successfully!`);
     } catch (err) {
@@ -325,7 +287,7 @@ function App() {
     }
 
     try {
-      const updatedProject = await supabaseService.updateProject(id, projectData);
+      const updatedProject = await postgresService.updateProject(id, projectData);
       setProjects(prev => prev.map(p => p.id === id ? updatedProject : p));
       // Update allocations with new project name
       setAllocations(prev => prev.map(a => a.projectId === id ? { ...a, projectName: projectData.name } : a));
@@ -350,7 +312,7 @@ function App() {
     setConfirmType('danger');
     setConfirmAction(() => async () => {
       try {
-        await supabaseService.deleteProject(id);
+        await postgresService.deleteProject(id);
         setProjects(prev => prev.filter(p => p.id !== id));
         setAllocations(prev => prev.filter(a => a.projectId !== id));
         success(`Project "${project.name}" deleted successfully!`);
@@ -378,7 +340,7 @@ function App() {
         return;
       }
 
-      const newRole = await supabaseService.addRole(roleData);
+      const newRole = await postgresService.createRole(roleData);
       setRoles(prev => [...prev, newRole]);
       success(`Role "${roleData.name}" added successfully!`);
     } catch (err) {
@@ -394,10 +356,10 @@ function App() {
     }
 
     try {
-      const updatedRole = await supabaseService.updateRole(id, roleData);
+      const updatedRole = await postgresService.updateRole(id, roleData);
       setRoles(prev => prev.map(r => r.id === id ? updatedRole : r));
       // Refresh team members to reflect role name changes
-      const updatedMembers = await supabaseService.getTeamMembers();
+      const updatedMembers = await postgresService.getTeamMembers();
       setTeamMembers(updatedMembers);
       success(`Role "${roleData.name}" updated successfully!`);
     } catch (err) {
@@ -420,7 +382,7 @@ function App() {
     setConfirmType('danger');
     setConfirmAction(() => async () => {
       try {
-        await supabaseService.deleteRole(id);
+        await postgresService.deleteRole(id);
         setRoles(prev => prev.filter(r => r.id !== id));
         success(`Role "${role.name}" deleted successfully!`);
       } catch (err: unknown) {
@@ -443,12 +405,12 @@ function App() {
 
     try {
       if (editingAllocation) {
-        const updatedAllocation = await supabaseService.updateAllocation(editingAllocation.id, allocationData);
+        const updatedAllocation = await postgresService.updateAllocation(editingAllocation.id, allocationData);
         setAllocations(prev => prev.map(a => a.id === editingAllocation.id ? updatedAllocation : a));
         success('Allocation updated successfully!');
         setEditingAllocation(null);
       } else {
-        const newAllocation = await supabaseService.addAllocation(allocationData);
+        const newAllocation = await postgresService.createAllocation(allocationData);
         setAllocations(prev => [...prev, newAllocation]);
         success('Allocation created successfully!');
       }
@@ -483,7 +445,7 @@ function App() {
     setConfirmType('danger');
     setConfirmAction(() => async () => {
       try {
-        await supabaseService.deleteAllocation(id);
+        await postgresService.deleteAllocation(id);
         setAllocations(prev => prev.filter(a => a.id !== id));
         success('Allocation deleted successfully!');
       } catch (err) {
@@ -530,14 +492,25 @@ function App() {
     );
   }
 
-  // Show database configuration if needed
-  if (showDatabaseConfig) {
-    return <DatabaseConfig onConfigSave={handleDatabaseConfig} />;
-  }
-
-  // Show database setup if not connected
+  // Show database connection error
   if (!databaseConnected) {
-    return <DatabaseSetup onRetry={checkDatabaseConnection} />;
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+        <div className="text-center max-w-md">
+          <div className="text-red-500 text-6xl mb-4">⚠️</div>
+          <h2 className="text-2xl font-bold text-gray-800 mb-2">Database Connection Failed</h2>
+          <p className="text-gray-600 mb-4">
+            Could not connect to the PostgreSQL database. Please ensure the backend server is running.
+          </p>
+          <button
+            onClick={checkDatabaseConnection}
+            className="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
+          >
+            Retry Connection
+          </button>
+        </div>
+      </div>
+    );
   }
 
   // Show 404 page for invalid routes

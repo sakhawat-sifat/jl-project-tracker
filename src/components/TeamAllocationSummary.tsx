@@ -118,31 +118,33 @@ const DetailModal: React.FC<DetailModalProps> = ({ isOpen, onClose, member, defa
 
   return (
     <div 
-      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999]"
       onClick={handleBackdropClick}
     >
-      <div className="bg-white rounded-xl shadow-2xl max-w-4xl w-full mx-auto max-h-[90vh] overflow-hidden">
-        <div className="p-6 border-b border-gray-200 bg-gradient-to-r from-indigo-50 to-blue-50">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <div className="w-12 h-12 bg-gradient-to-r from-indigo-500 to-blue-500 rounded-full flex items-center justify-center text-white font-medium mr-4">
-                {member.member.name.charAt(0).toUpperCase()}
+      <div className="bg-white rounded-xl shadow-2xl max-w-4xl w-full mx-4 max-h-[90vh] overflow-hidden flex flex-col">
+        <div className="bg-gradient-to-r from-indigo-50 to-blue-50">
+          <div className="p-6 border-b border-gray-200">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <div className="w-12 h-12 bg-gradient-to-r from-indigo-500 to-blue-500 rounded-full flex items-center justify-center text-white font-medium mr-4">
+                  {member.member.name.charAt(0).toUpperCase()}
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-gray-800">{member.member.name}</h3>
+                  <p className="text-gray-600 font-medium">{member.member.role} • {member.member.department}</p>
+                </div>
               </div>
-              <div>
-                <h3 className="text-xl font-bold text-gray-800">{member.member.name}</h3>
-                <p className="text-gray-600 font-medium">{member.member.role} • {member.member.department}</p>
-              </div>
+              <button
+                onClick={onClose}
+                className="p-2 hover:bg-white hover:bg-opacity-50 rounded-lg transition-colors"
+              >
+                <X className="h-5 w-5 text-gray-500" />
+              </button>
             </div>
-            <button
-              onClick={onClose}
-              className="p-2 hover:bg-white hover:bg-opacity-50 rounded-lg transition-colors"
-            >
-              <X className="h-5 w-5 text-gray-500" />
-            </button>
           </div>
         </div>
 
-        <div className="p-6 overflow-y-auto max-h-[70vh]">
+        <div className="p-6 overflow-y-auto flex-1 bg-white">
           {/* Summary Stats */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
             <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-lg border border-blue-200">

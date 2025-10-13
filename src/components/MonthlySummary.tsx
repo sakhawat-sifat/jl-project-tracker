@@ -885,11 +885,12 @@ const MonthlySummary: React.FC<MonthlySummaryProps> = ({ allocations, teamMember
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
                           <div className="flex flex-wrap gap-2">
-                            {Object.entries(item.members).map(([memberName, allocation]: [string, any], memberIndex) => {
+                            {Object.entries(item.members).map(([memberName, allocation]: [string, any]) => {
                               const member = teamMembers.find(m => m.name === memberName);
+                              const allocationValue = typeof allocation === 'number' ? allocation : parseFloat(allocation);
                               return (
-                                <span key={memberIndex} className="inline-flex items-center px-2 py-1 bg-gray-100 rounded-full text-xs font-medium text-gray-800">
-                                  {memberName}: {allocation.toFixed(1)}%
+                                <span key={memberName} className="inline-flex items-center px-2 py-1 bg-gray-100 rounded-full text-xs font-medium text-gray-800">
+                                  {memberName}: {allocationValue.toFixed(1)}%
                                 </span>
                               );
                             })}

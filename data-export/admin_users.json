@@ -1,0 +1,35 @@
+[
+  {
+    "id": "170463c2-dc5f-4154-be0e-f1dcd25966d3",
+    "username": "guest",
+    "email": "guest@gmail.com",
+    "password_hash": "Z3Vlc3QxMjM=",
+    "role": "member",
+    "is_active": true,
+    "last_login": "2025-10-08T06:52:29.86+00:00",
+    "created_at": "2025-10-08T06:39:04.686032+00:00",
+    "created_by": null
+  },
+  {
+    "id": "2e723be5-834b-4a33-97be-88cdadeb4933",
+    "username": "superadmin",
+    "email": "superadmin@jouleslabs.com",
+    "password_hash": "c3VwZXIxMjM=",
+    "role": "super_admin",
+    "is_active": true,
+    "last_login": "2025-10-08T06:38:27.793+00:00",
+    "created_at": "2025-07-09T09:38:26.67294+00:00",
+    "created_by": null
+  },
+  {
+    "id": "bd6b54ea-033f-4a47-a7cb-1eb065319142",
+    "username": "firoz",
+    "email": "firoz@jouleslabs.xyz",
+    "password_hash": "Zmlyb3oxMjM=",
+    "role": "member",
+    "is_active": true,
+    "last_login": "2025-10-06T08:17:09.454+00:00",
+    "created_at": "2025-10-05T07:50:09.3769+00:00",
+    "created_by": null
+  }
+]

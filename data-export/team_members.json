@@ -1,0 +1,200 @@
+[
+  {
+    "id": "0e3e5b8e-e8d1-44b8-a537-60f6db3ac482",
+    "name": "Md Mostafijur Rahman",
+    "role": "Mobile App Developer",
+    "email": "mostafijur.rahman@jouleslabs.xyz",
+    "department": "Engineering",
+    "created_at": "2025-06-30T09:13:36.790392+00:00",
+    "status": "active"
+  },
+  {
+    "id": "170401dd-cade-45b1-b48f-060702e86194",
+    "name": "Mohammad Abdul Hannan",
+    "role": "Creative Designer",
+    "email": "abdul.hannan@jouleslabs.xyz",
+    "department": "Design",
+    "created_at": "2025-06-30T09:07:35.681502+00:00",
+    "status": "active"
+  },
+  {
+    "id": "1f48f97a-50ce-4041-856f-fe4e7a1d0d7c",
+    "name": "Md Shariful Islam Khan",
+    "role": "UI/UX Designer",
+    "email": "shariful.khan@jouleslabs.xyz",
+    "department": "Design",
+    "created_at": "2025-06-30T09:14:27.390671+00:00",
+    "status": "active"
+  },
+  {
+    "id": "22f4db85-6a98-4692-8c96-d1c9ee4029ed",
+    "name": "Sojib Hossen",
+    "role": "Frontend Developer",
+    "email": "sojib.hossen@jouleslabs.xyz",
+    "department": "Engineering",
+    "created_at": "2025-06-30T09:28:46.707513+00:00",
+    "status": "active"
+  },
+  {
+    "id": "3294d077-1fae-4de3-b3e6-d307cae7501e",
+    "name": "Arafat Rahman Sayad",
+    "role": "DevOps Engineer",
+    "email": "arafat.sayad@jouleslabs.xyz",
+    "department": "Engineering",
+    "created_at": "2025-06-24T12:03:07.327686+00:00",
+    "status": "active"
+  },
+  {
+    "id": "3c43c866-fce5-43fb-8d73-6f461039902a",
+    "name": "Asif Jalil",
+    "role": "Backend Developer",
+    "email": "asif.jalil@jouleslabs.xyz",
+    "department": "Engineering",
+    "created_at": "2025-08-06T05:59:56.628052+00:00",
+    "status": "active"
+  },
+  {
+    "id": "43400c60-1db6-4e01-8b37-91664d76cf19",
+    "name": "Md. Nurul Amin",
+    "role": "Project Manager",
+    "email": "nurul.amin@jouleslabs.xyz",
+    "department": "Operations",
+    "created_at": "2025-06-30T09:15:01.416899+00:00",
+    "status": "active"
+  },
+  {
+    "id": "65d1becf-055b-45bc-a3f7-166c99c49ea3",
+    "name": "Mahamudul Hasan Rubel",
+    "role": "WordPress Developer",
+    "email": "hasan.rubel@jouleslabs.xyz",
+    "department": "Engineering",
+    "created_at": "2025-06-30T09:08:09.931748+00:00",
+    "status": "active"
+  },
+  {
+    "id": "7c52998e-7846-4da6-9ec9-eb5f23ba6bdb",
+    "name": "Tofayel Hyder Abhi",
+    "role": "Backend Developer",
+    "email": "tofayel.hyder@jouleslabs.xyz",
+    "department": "Engineering",
+    "created_at": "2025-06-30T09:32:02.707613+00:00",
+    "status": "inactive"
+  },
+  {
+    "id": "991e427f-d043-49cc-915e-2baec34bfca2",
+    "name": "Mahamudul Hasan ",
+    "role": "Support Engineer",
+    "email": "farhan.muhtasim@jouleslabs.xyz",
+    "department": "Engineering",
+    "created_at": "2025-06-30T09:32:53.702022+00:00",
+    "status": "active"
+  },
+  {
+    "id": "a649d1d9-c651-4a6f-a3b9-096c9c6aff0f",
+    "name": "Abdullah Mohammad Hasan",
+    "role": "Creative Designer",
+    "email": "abdullah.hasan@jouleslabs.xyz",
+    "department": "Design",
+    "created_at": "2025-06-24T12:01:23.798545+00:00",
+    "status": "active"
+  },
+  {
+    "id": "ad6fe0ac-a11a-4403-8bf6-d4b78f9805c9",
+    "name": "Fahim Al Emroz",
+    "role": "Frontend Developer",
+    "email": "fahim.emroz@jouleslabs.xyz",
+    "department": "Engineering",
+    "created_at": "2025-06-24T12:05:31.651833+00:00",
+    "status": "active"
+  },
+  {
+    "id": "b2d9147d-e106-4110-b993-d4bcde5cb063",
+    "name": "Sabbir Mahmud",
+    "role": "Product Manager",
+    "email": "sabbir.mahmud@jouleslabs.xyz",
+    "department": "Product",
+    "created_at": "2025-06-30T09:27:45.361351+00:00",
+    "status": "active"
+  },
+  {
+    "id": "b41a9ce8-6c62-4c7a-bb11-7b1f9f326fd1",
+    "name": "Abdullah Al Mamun",
+    "role": "Backend Developer",
+    "email": "abdullah.mamun@jouleslabs.xyz",
+    "department": "Engineering",
+    "created_at": "2025-06-24T11:57:43.877926+00:00",
+    "status": "active"
+  },
+  {
+    "id": "c74cea1d-34be-408a-83b2-a4c69bd558fb",
+    "name": "Md. Sagor",
+    "role": "Frontend Developer",
+    "email": "meer.sagor@jouleslabs.xyz",
+    "department": "Engineering",
+    "created_at": "2025-06-30T09:15:59.616941+00:00",
+    "status": "active"
+  },
+  {
+    "id": "ce630609-2f63-4d36-b132-da0efd67eed1",
+    "name": "Sujan Miya",
+    "role": "WordPress Developer",
+    "email": "sujan.miya@jouleslabs.xyz",
+    "department": "Engineering",
+    "created_at": "2025-06-30T09:29:47.938016+00:00",
+    "status": "inactive"
+  },
+  {
+    "id": "d5708d6b-5e46-448a-a93b-18e416b1bd97",
+    "name": "Sakhawat Hossain",
+    "role": "Project Manager",
+    "email": "sakhawat.hossain@jouleslabs.xyz",
+    "department": "Operations",
+    "created_at": "2025-06-23T04:12:09.938984+00:00",
+    "status": "active"
+  },
+  {
+    "id": "e0c12e0c-5935-470c-b87a-faca67fd8aa9",
+    "name": "Eshtiyak Fahim",
+    "role": "Backend Developer",
+    "email": "eshtiyak.fahim@jouleslabs.xyz",
+    "department": "Engineering",
+    "created_at": "2025-09-02T10:11:32.86937+00:00",
+    "status": "active"
+  },
+  {
+    "id": "e6a777f3-bd3f-4432-892b-d49a5880f869",
+    "name": "Firoz Sannamot",
+    "role": "HR",
+    "email": "firoz@jouleslabs.xyz",
+    "department": "HR",
+    "created_at": "2025-06-24T12:07:35.27661+00:00",
+    "status": "active"
+  },
+  {
+    "id": "e9a90c73-45f0-4729-8c81-5c01f527f225",
+    "name": "Md. Tarek Khalifa",
+    "role": "Happiness Manager",
+    "email": "tarek.khalifa@jouleslabs.xyz",
+    "department": "Operations",
+    "created_at": "2025-06-30T09:26:08.235251+00:00",
+    "status": "active"
+  },
+  {
+    "id": "eb6f6ffc-6d8f-4033-a892-2d0efe65bf99",
+    "name": "Shakib Hossain",
+    "role": "Backend Developer",
+    "email": "shakib.tomal@jouleslabs.xyz",
+    "department": "Engineering",
+    "created_at": "2025-06-30T09:28:15.4021+00:00",
+    "status": "inactive"
+  },
+  {
+    "id": "fdfb6dba-6fc0-41b6-9287-062941dc5f86",
+    "name": "Muhammad Yasin",
+    "role": "Happiness Manager",
+    "email": "muhammad.yasin@jouleslabs.xyz",
+    "department": "Operations",
+    "created_at": "2025-06-30T09:26:46.655678+00:00",
+    "status": "active"
+  }
+]

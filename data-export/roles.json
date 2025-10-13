@@ -1,0 +1,86 @@
+[
+  {
+    "id": "069db59d-ae24-4bf2-8b45-2ac0359e7e26",
+    "name": "Business Consultant",
+    "department": "Marketing",
+    "created_at": "2025-06-30T09:34:38.535806+00:00"
+  },
+  {
+    "id": "293d23e2-a6b1-4d86-be6b-3f753e3f62b5",
+    "name": "QA Engineer",
+    "department": "Engineering",
+    "created_at": "2025-06-23T03:53:35.436437+00:00"
+  },
+  {
+    "id": "432e93bc-2a06-48fa-999c-619a401e905b",
+    "name": "DevOps Engineer",
+    "department": "Engineering",
+    "created_at": "2025-06-23T03:53:35.436437+00:00"
+  },
+  {
+    "id": "6e0d0b8a-c76d-4510-a5eb-d22f16ba0c1f",
+    "name": "Product Manager",
+    "department": "Product",
+    "created_at": "2025-06-23T03:53:35.436437+00:00"
+  },
+  {
+    "id": "7f5137df-a0d1-4c3e-af46-d09a268ca2f2",
+    "name": "Mobile App Developer",
+    "department": "Engineering",
+    "created_at": "2025-06-30T09:13:13.258524+00:00"
+  },
+  {
+    "id": "868d9673-a2f5-41a7-8135-06aef8b2d963",
+    "name": "Project Manager",
+    "department": "Product",
+    "created_at": "2025-06-23T03:53:35.436437+00:00"
+  },
+  {
+    "id": "8bd9e42a-5a62-4085-8c44-f03d576e7f89",
+    "name": "Support Engineer",
+    "department": "Product",
+    "created_at": "2025-06-23T03:53:35.436437+00:00"
+  },
+  {
+    "id": "8e011141-f69b-47e1-bd71-f3ac9ac228a6",
+    "name": "Backend Developer",
+    "department": "Engineering",
+    "created_at": "2025-06-23T03:53:35.436437+00:00"
+  },
+  {
+    "id": "c6dc481f-ba41-47db-8fdb-8e9afcfbfb7a",
+    "name": "UI/UX Designer",
+    "department": "Design",
+    "created_at": "2025-06-23T03:53:35.436437+00:00"
+  },
+  {
+    "id": "cec9c08c-e169-460b-af06-c8fd5680c80b",
+    "name": "Frontend Developer",
+    "department": "Engineering",
+    "created_at": "2025-06-23T03:53:35.436437+00:00"
+  },
+  {
+    "id": "ef0b9f2a-b63c-4077-93ff-69d7b63033c8",
+    "name": "HR",
+    "department": "HR",
+    "created_at": "2025-06-24T12:07:16.642871+00:00"
+  },
+  {
+    "id": "f557db4d-fbd1-4c61-9001-ac5e3bdf1aeb",
+    "name": "Happiness Manager",
+    "department": "Operations",
+    "created_at": "2025-06-30T09:16:56.631655+00:00"
+  },
+  {
+    "id": "fd6b9ca6-4e55-4e0d-8fc5-d53298112a8d",
+    "name": "Creative Designer",
+    "department": "Design",
+    "created_at": "2025-06-24T12:00:54.881953+00:00"
+  },
+  {
+    "id": "ffc02b33-6c69-4b19-9677-dc047e7ed7de",
+    "name": "WordPress Developer",
+    "department": "Engineering",
+    "created_at": "2025-06-30T09:29:21.551318+00:00"
+  }
+]

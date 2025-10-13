@@ -34,8 +34,9 @@ const RoleManagement: React.FC<RoleManagementProps> = ({
     department: ''
   });
 
-  const departments = ['Engineering', 'Design', 'Product', 'Marketing', 'Sales', 'Operations', 'HR', 'Finance'];
-  const uniqueDepartments = Array.from(new Set(roles.map(r => r.department).filter(Boolean))).sort();
+  const departments = ['Engineering', 'Design', 'Product', 'Marketing', 'Sales', 'Operations', 'HR', 'Finance'].sort((a, b) => a.localeCompare(b));
+  const uniqueDepartments = Array.from(new Set(roles.map(r => r.department).filter(Boolean))) as string[];
+  uniqueDepartments.sort((a, b) => a.localeCompare(b));
 
   const filteredRoles = roles.filter(role => {
     const matchesSearch = role.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
